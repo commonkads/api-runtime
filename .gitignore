@@ -1,0 +1,8 @@
+node_modules/
+dist/
+published/
+*.tgz
+junit.xml
+*.tsbuildinfo
+test/**/*.js
+test/**/*.js.map
