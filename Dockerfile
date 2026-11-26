@@ -2,8 +2,11 @@ ARG PROVIDERS=local
 
 FROM node:24-alpine AS build
 WORKDIR /app
-COPY package.json ./
-RUN npm install
+COPY package.json .npmrc ./
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
+    npm config set //npm.pkg.github.com/:_authToken="$(cat /run/secrets/NODE_AUTH_TOKEN 2>/dev/null)" && \
+    npm install && \
+    npm config delete //npm.pkg.github.com/:_authToken
 RUN for p in $(echo "$PROVIDERS" | tr ',' ' '); do \
       case "$p" in \
         aws)       npm install @commonkads/provider-aws ;; \
