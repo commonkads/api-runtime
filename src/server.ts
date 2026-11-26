@@ -22,8 +22,8 @@ import {
 import type { IFileStore, IInferenceProvider } from '@commonkads/engine';
 
 function buildProviderOptions(): ProviderConfig {
-  const type = process.env['STRATA_PROVIDER'] ?? 'bedrock';
-  const model = process.env['STRATA_MODEL'] ?? '';
+  const type = process.env['COMMONKADS_PROVIDER'] ?? 'bedrock';
+  const model = process.env['COMMONKADS_MODEL'] ?? '';
   switch (type) {
     case 'claude':
       return {
@@ -31,14 +31,14 @@ function buildProviderOptions(): ProviderConfig {
         model,
         apiKey: process.env['ANTHROPIC_API_KEY'],
         authToken: process.env['ANTHROPIC_AUTH_TOKEN'],
-        thinking: process.env['STRATA_THINKING'] === 'true',
+        thinking: process.env['COMMONKADS_THINKING'] === 'true',
       };
     case 'gemini':
       return {
         type: 'gemini',
         model,
         apiKey: process.env['GEMINI_API_KEY'] ?? process.env['GOOGLE_API_KEY'],
-        thinking: process.env['STRATA_THINKING'] === 'true',
+        thinking: process.env['COMMONKADS_THINKING'] === 'true',
       };
     case 'ollama':
       return { type: 'ollama', model, baseUrl: process.env['OLLAMA_BASE_URL'] };
@@ -47,7 +47,7 @@ function buildProviderOptions(): ProviderConfig {
         type: 'bedrock',
         model,
         region: process.env['AWS_REGION'],
-        guardrail: process.env['STRATA_GUARDRAIL'],
+        guardrail: process.env['COMMONKADS_GUARDRAIL'],
       };
   }
 }
@@ -70,9 +70,9 @@ function buildDomainFileStore(catalogStore: IFileStore, domainPath: string): IFi
 
 export function createServer(deps: ServerDeps = {}): Express {
   const fileStore =
-    deps.fileStore ?? new LocalFileStore(process.env['STRATA_KNOWLEDGE_ROOT'] ?? '/knowledge');
+    deps.fileStore ?? new LocalFileStore(process.env['COMMONKADS_KNOWLEDGE_ROOT'] ?? '/knowledge');
   const inference = deps.inference ?? buildInference(buildProviderOptions());
-  const logLevel = process.env['STRATA_LOG_LEVEL'] as LogLevel | undefined;
+  const logLevel = process.env['COMMONKADS_LOG_LEVEL'] as LogLevel | undefined;
 
   const app = express();
   app.use(express.json());

@@ -22,8 +22,8 @@ api-runtime/
 
 Performs three startup tasks before binding the port:
 
-1. **File store** — `buildFileStore()` checks `STRATA_S3_BUCKET`; if set, dynamically imports `@robproper/strata-aws` and instantiates `S3FileStore`; otherwise uses `LocalFileStore`.
-2. **Provider registration** — `loadProviders()` iterates `STRATA_PROVIDER_PACKAGES`, dynamically imports each, and calls `.register()`. Failed imports log a warning and are skipped.
+1. **File store** — `buildFileStore()` checks `COMMONKADS_S3_BUCKET`; if set, dynamically imports `@commonkads/provider-aws` and instantiates `S3FileStore`; otherwise uses `LocalFileStore`.
+2. **Provider registration** — `loadProviders()` iterates `COMMONKADS_PROVIDER_PACKAGES`, dynamically imports each, and calls `.register()`. Failed imports log a warning and are skipped.
 3. **Server start** — calls `createServer({ fileStore })` and binds `PORT`.
 
 ### Server (`src/server.ts`)
@@ -45,4 +45,4 @@ Each request to `/execute`:
 
 ### Docker build
 
-The `Dockerfile` uses a build arg `PROVIDERS` (default `local`). The build stage installs the base package, then conditionally installs provider packages (`@robproper/strata-aws`, `@robproper/strata-anthropic`, `@robproper/strata-google`) based on the comma-separated `PROVIDERS` value. The final stage copies only `dist/`, `node_modules/`, and `package.json`.
+The `Dockerfile` uses a build arg `PROVIDERS` (default `local`). The build stage installs the base package, then conditionally installs provider packages (`@commonkads/provider-aws`, `@commonkads/provider-anthropic`, `@commonkads/provider-google`) based on the comma-separated `PROVIDERS` value. The final stage copies only `dist/`, `node_modules/`, and `package.json`.

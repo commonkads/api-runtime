@@ -19,4 +19,4 @@ Port file by file over multiple PRs.
 
 **Angle 1.** The source is well-structured and production-ready. A direct copy with targeted renames and document cleanup is the right scope. Structural improvements belong in a follow-on feature.
 
-The key distinction: "do not reference strata-engine in the documents" applies to documentation (README.md, comments) only — the `@robproper/strata-engine` import in `src/server.ts` is a functional dependency and must remain.
+All `@robproper/strata-*` package references are replaced with their `@commonkads` equivalents, and `STRATA_` environment variable prefixes are renamed to `COMMONKADS_`.

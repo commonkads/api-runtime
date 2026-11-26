@@ -23,10 +23,8 @@
 | File | Change |
 |------|--------|
 | `package.json` | `name`: `strata-runtime-api` → `api-runtime`; `description`: "REST API for the Strata engine" → "REST API for PSM task execution" |
-| `src/index.ts` | Log messages: `strata-runtime-api` → `api-runtime` |
-| `README.md` | Title, image tags, container names: `strata-runtime-api` → `api-runtime`; "built into `@robproper/strata-engine`" reworded to "always available"; disclaimer added |
-
-## Key decisions
-
-- `src/server.ts` left completely unchanged — the `@robproper/strata-engine` import is a functional dependency, not a document reference.
-- Environment variable names (`STRATA_*`) preserved — they are part of the public API and renaming them would break deployments.
+| `src/index.ts` | Log messages: `api-runtime`; `@robproper/strata-*` → `@commonkads/provider-*`; `STRATA_` → `COMMONKADS_` |
+| `src/server.ts` | `@robproper/strata-engine` → `@commonkads/engine`; `STRATA_` → `COMMONKADS_` |
+| `src/server.test.ts` | `@robproper/strata-engine` → `@commonkads/engine` |
+| `README.md` | Title, image/container tags renamed; all `@robproper/strata-*` → `@commonkads/*`; `STRATA_` → `COMMONKADS_`; disclaimer added |
+| `Dockerfile` | `@robproper/strata-*` provider installs → `@commonkads/provider-*` |
