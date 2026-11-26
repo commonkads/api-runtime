@@ -18,8 +18,8 @@ import {
   DomainManifestError,
   TaskExecutionError,
   TaskInputValidationError,
-} from '@robproper/strata-engine';
-import type { IFileStore, IInferenceProvider } from '@robproper/strata-engine';
+} from '@commonkads/engine';
+import type { IFileStore, IInferenceProvider } from '@commonkads/engine';
 
 function buildProviderOptions(): ProviderConfig {
   const type = process.env['STRATA_PROVIDER'] ?? 'bedrock';

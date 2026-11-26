@@ -6,9 +6,9 @@ COPY package.json ./
 RUN npm install
 RUN for p in $(echo "$PROVIDERS" | tr ',' ' '); do \
       case "$p" in \
-        aws)       npm install @robproper/strata-aws ;; \
-        anthropic) npm install @robproper/strata-anthropic ;; \
-        google)    npm install @robproper/strata-google ;; \
+        aws)       npm install @commonkads/provider-aws ;; \
+        anthropic) npm install @commonkads/provider-anthropic ;; \
+        google)    npm install @commonkads/provider-google ;; \
         local)     ;; \
       esac; \
     done

@@ -34,7 +34,7 @@ Supported `PROVIDERS` values (comma-separated): `local`, `aws`, `anthropic`, `go
 docker run -p 3000:3000 \
   -e STRATA_PROVIDER=bedrock \
   -e STRATA_MODEL=anthropic.claude-3-5-sonnet-20241022-v2:0 \
-  -e STRATA_PROVIDER_PACKAGES=@robproper/strata-aws \
+  -e STRATA_PROVIDER_PACKAGES=@commonkads/provider-aws \
   -e STRATA_S3_BUCKET=my-knowledge-bucket \
   -e AWS_REGION=us-east-1 \
   api-runtime
@@ -45,7 +45,7 @@ docker run -p 3000:3000 \
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PORT` | `3000` | HTTP port to listen on |
-| `STRATA_PROVIDER_PACKAGES` | _(none)_ | Comma-separated package names to register at startup, e.g. `@robproper/strata-aws,@robproper/strata-anthropic` |
+| `STRATA_PROVIDER_PACKAGES` | _(none)_ | Comma-separated package names to register at startup, e.g. `@commonkads/provider-aws,@commonkads/provider-anthropic` |
 | `STRATA_PROVIDER` | `bedrock` | Provider type: `bedrock`, `claude`, `gemini`, `ollama` |
 | `STRATA_MODEL` | _(required)_ | Model name passed to the provider |
 | `STRATA_KNOWLEDGE_ROOT` | `/knowledge` | Path to knowledge directory (local/Ollama deployments) |
