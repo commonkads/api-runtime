@@ -15,6 +15,7 @@ RUN for p in $(echo "$PROVIDERS" | tr ',' ' '); do \
         local)     ;; \
       esac; \
     done
+COPY eslint.config.mjs .prettierrc.js ./
 COPY src/ ./src/
 COPY tsconfig.json ./
 RUN npm run compile
