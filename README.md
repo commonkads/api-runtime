@@ -1,5 +1,7 @@
 # api-runtime
 
+> **Disclaimer:** This project is an independent open-source software implementation inspired by the CommonKADS knowledge engineering methodology (Schreiber et al.). It is not affiliated with or endorsed by the original methodology authors or any third-party trademark holders.
+
 A Docker-deployable REST API for PSM task execution. It accepts a knowledge catalog and
 domain configuration, then exposes HTTP endpoints for health-checking and executing
 PSM (Problem-Solving Method) tasks against configured knowledge domains.
