@@ -17,7 +17,7 @@ RUN for p in $(echo "$PROVIDERS" | tr ',' ' '); do \
     done
 COPY eslint.config.mjs .prettierrc.js ./
 COPY src/ ./src/
-COPY tsconfig.json ./
+COPY tsconfig.json tsconfig.test.json ./
 RUN npm run compile
 RUN npm prune --omit=dev
 
