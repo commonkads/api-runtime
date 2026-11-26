@@ -7,7 +7,7 @@ import type {
   IFileStore,
   IInferenceProvider,
   InferenceOptions,
-} from '@robproper/strata-engine';
+} from '@commonkads/engine';
 
 import { createServer } from './server.js';
 

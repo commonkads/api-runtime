@@ -20,7 +20,7 @@
     "test:ci": "node --no-warnings --import tsx/esm --test-reporter spec --test-reporter-destination stdout --test-reporter junit --test-reporter-destination test-results.xml --test $(find src -name '*.test.ts' | sort)"
   },
   "dependencies": {
-    "@robproper/strata-engine": "*",
+    "@commonkads/engine": "*",
     "express": "^5.1.0"
   },
   "devDependencies": {

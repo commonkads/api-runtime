@@ -1,5 +1,7 @@
 # api-runtime
 
+> **Disclaimer:** This project is an independent open-source software implementation inspired by the CommonKADS knowledge engineering methodology (Schreiber et al.). It is not affiliated with or endorsed by the original methodology authors or any third-party trademark holders.
+
 A Docker-deployable REST API for PSM task execution. It accepts a knowledge catalog and
 domain configuration, then exposes HTTP endpoints for health-checking and executing
 PSM (Problem-Solving Method) tasks against configured knowledge domains.
@@ -30,10 +32,10 @@ Supported `PROVIDERS` values (comma-separated): `local`, `aws`, `anthropic`, `go
 
 ```sh
 docker run -p 3000:3000 \
-  -e STRATA_PROVIDER=bedrock \
-  -e STRATA_MODEL=anthropic.claude-3-5-sonnet-20241022-v2:0 \
-  -e STRATA_PROVIDER_PACKAGES=@robproper/strata-aws \
-  -e STRATA_S3_BUCKET=my-knowledge-bucket \
+  -e COMMONKADS_PROVIDER=bedrock \
+  -e COMMONKADS_MODEL=anthropic.claude-3-5-sonnet-20241022-v2:0 \
+  -e COMMONKADS_PROVIDER_PACKAGES=@commonkads/provider-aws \
+  -e COMMONKADS_S3_BUCKET=my-knowledge-bucket \
   -e AWS_REGION=us-east-1 \
   api-runtime
 ```
@@ -43,19 +45,19 @@ docker run -p 3000:3000 \
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PORT` | `3000` | HTTP port to listen on |
-| `STRATA_PROVIDER_PACKAGES` | _(none)_ | Comma-separated package names to register at startup, e.g. `@robproper/strata-aws,@robproper/strata-anthropic` |
-| `STRATA_PROVIDER` | `bedrock` | Provider type: `bedrock`, `claude`, `gemini`, `ollama` |
-| `STRATA_MODEL` | _(required)_ | Model name passed to the provider |
-| `STRATA_KNOWLEDGE_ROOT` | `/knowledge` | Path to knowledge directory (local/Ollama deployments) |
-| `STRATA_S3_BUCKET` | _(none)_ | S3 bucket name; presence switches file store to S3 |
+| `COMMONKADS_PROVIDER_PACKAGES` | _(none)_ | Comma-separated package names to register at startup, e.g. `@commonkads/provider-aws,@commonkads/provider-anthropic` |
+| `COMMONKADS_PROVIDER` | `bedrock` | Provider type: `bedrock`, `claude`, `gemini`, `ollama` |
+| `COMMONKADS_MODEL` | _(required)_ | Model name passed to the provider |
+| `COMMONKADS_KNOWLEDGE_ROOT` | `/knowledge` | Path to knowledge directory (local/Ollama deployments) |
+| `COMMONKADS_S3_BUCKET` | _(none)_ | S3 bucket name; presence switches file store to S3 |
 | `AWS_REGION` | _(none)_ | AWS region for Bedrock and S3 |
 | `ANTHROPIC_API_KEY` | _(none)_ | Anthropic API key |
 | `ANTHROPIC_AUTH_TOKEN` | _(none)_ | Anthropic auth token (alternative to API key) |
 | `GEMINI_API_KEY` / `GOOGLE_API_KEY` | _(none)_ | Google AI API key |
 | `OLLAMA_BASE_URL` | _(none)_ | Ollama base URL, e.g. `http://host.docker.internal:11434` |
-| `STRATA_THINKING` | `false` | Set to `true` to enable extended thinking (Claude / Gemini) |
-| `STRATA_GUARDRAIL` | _(none)_ | Bedrock guardrail name |
-| `STRATA_LOG_LEVEL` | _(none)_ | Log level filter for PSM step execution logs |
+| `COMMONKADS_THINKING` | `false` | Set to `true` to enable extended thinking (Claude / Gemini) |
+| `COMMONKADS_GUARDRAIL` | _(none)_ | Bedrock guardrail name |
+| `COMMONKADS_LOG_LEVEL` | _(none)_ | Log level filter for PSM step execution logs |
 
 ## Endpoints
 
