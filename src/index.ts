@@ -1,5 +1,5 @@
 import { LocalFileStore, consoleWriter } from '@commonkads/engine';
-import type { IFileStore } from '@commonkads/engine';
+import type { IStorageBackend } from '@commonkads/engine';
 
 import { createServer } from './server.js';
 
@@ -8,10 +8,10 @@ interface ProviderModule {
 }
 
 interface S3Module {
-  S3FileStore: new (bucket: string, opts?: { region?: string }) => IFileStore;
+  S3FileStore: new (bucket: string, opts?: { region?: string }) => IStorageBackend;
 }
 
-async function buildFileStore(): Promise<IFileStore> {
+async function buildFileStore(): Promise<IStorageBackend> {
   const bucket = process.env['COMMONKADS_S3_BUCKET'];
   if (bucket) {
     try {

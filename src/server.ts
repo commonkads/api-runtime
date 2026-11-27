@@ -3,7 +3,6 @@ import type { Express } from 'express';
 
 import {
   LocalFileStore,
-  FileStoreKnowledgeAdapter,
   RuntimeEngine,
   RuntimeContext,
   loadCatalog,
@@ -19,7 +18,7 @@ import {
   TaskExecutionError,
   TaskInputValidationError,
 } from '@commonkads/engine';
-import type { IFileStore, IInferenceProvider } from '@commonkads/engine';
+import type { ICatalog, IStorageBackend, InferenceProvider } from '@commonkads/engine';
 
 function buildProviderOptions(): ProviderConfig {
   const type = process.env['COMMONKADS_PROVIDER'] ?? 'bedrock';
@@ -53,12 +52,12 @@ function buildProviderOptions(): ProviderConfig {
 }
 
 export interface ServerDeps {
-  fileStore?: IFileStore;
-  inference?: IInferenceProvider;
+  fileStore?: IStorageBackend;
+  inference?: InferenceProvider;
 }
 
 // domainPath comes from catalog.yml, which is operator-controlled, not from request input.
-function buildDomainFileStore(catalogStore: IFileStore, domainPath: string): IFileStore {
+function buildDomainFileStore(catalogStore: IStorageBackend, domainPath: string): IStorageBackend {
   const prefix = domainPath.endsWith('/') ? domainPath : `${domainPath}/`;
   return {
     read: (path) => catalogStore.read(`${prefix}${path}`),
@@ -137,15 +136,21 @@ export function createServer(deps: ServerDeps = {}): Express {
 
       const logger = logLevel ? new LevelFilterLogger(new StreamLogger(), logLevel) : undefined;
 
+      const domainFileStore = buildDomainFileStore(fileStore, entry.path);
+      const domainCatalog: ICatalog = {
+        getTask: async (_id: string) => task,
+        getModel: (id: string) => domainFileStore.readWithVersion(id),
+      };
+
       const context = new RuntimeContext({
+        catalog: domainCatalog,
         logger,
         explain: Boolean(options.explain),
         enableAuditLog: Boolean(options.audit),
         enableTimings: Boolean(options.timings),
       });
 
-      const domainFileStore = buildDomainFileStore(fileStore, entry.path);
-      const domainEngine = new RuntimeEngine(new FileStoreKnowledgeAdapter(domainFileStore), inference);
+      const domainEngine = new RuntimeEngine(inference);
       const result = await domainEngine.execute(task, input, context);
 
       const responseContext: Record<string, unknown> = {};

@@ -4,8 +4,8 @@ import request from 'supertest';
 
 import type {
   FileContent,
-  IFileStore,
-  IInferenceProvider,
+  IStorageBackend,
+  InferenceProvider,
   InferenceOptions,
 } from '@commonkads/engine';
 
@@ -25,7 +25,7 @@ knowledge:
   abstractionPath: abstraction.yml
   evaluationPath: evaluation.yml`;
 
-class FakeFileStore implements IFileStore {
+class FakeFileStore implements IStorageBackend {
   constructor(private readonly files: Record<string, string> = {}) {}
   async read(path: string): Promise<string> {
     const content = this.files[path];
@@ -42,7 +42,7 @@ class FakeFileStore implements IFileStore {
   }
 }
 
-class FakeInference implements IInferenceProvider {
+class FakeInference implements InferenceProvider {
   private callCount = 0;
   async infer(_prompt: string, _options?: InferenceOptions): Promise<string> {
     this.callCount++;
