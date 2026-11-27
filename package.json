@@ -1,6 +1,6 @@
 {
   "name": "api-runtime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Docker-deployable REST API for PSM task execution",
   "type": "module",
@@ -20,7 +20,7 @@
     "test:ci": "node --no-warnings --import tsx/esm --test-reporter spec --test-reporter-destination stdout --test-reporter junit --test-reporter-destination test-results.xml --test $(find src -name '*.test.ts' | sort)"
   },
   "dependencies": {
-    "@commonkads/engine": "*",
+    "@commonkads/engine": "^0.4.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
